@@ -3,6 +3,7 @@
 let exampleUser = {
   username: "exampleName",
   online: true,
+  unreadChats: [],
   friendList: [],
   chats: [],
   id: 1686048332310,
@@ -10,16 +11,19 @@ let exampleUser = {
 const exampleMsg = {
   content: "example message content",
   sentBy: exampleUser,
+  read: false,
   id: 1686046981622,
 };
 let exampleChat = {
   users: [],
   messages: [exampleMsg],
   lastMsg: exampleMsg,
+  undreadMessage: true,
   id: 1686049202912,
 };
 const exampleUser2 = {
   username: "exampleName2",
+  unreadChats: [exampleChat],
   online: true,
   friendList: [exampleUser],
   chats: [exampleChat],
@@ -28,6 +32,7 @@ const exampleUser2 = {
 exampleUser.friendList = [exampleUser2];
 exampleUser.chats = [exampleChat];
 exampleChat.users = [exampleUser, exampleUser2];
+exampleChat.unreadChats = [exampleChat];
 
 // declaration of the currently logged in user. will be replaced later with the real user.
 

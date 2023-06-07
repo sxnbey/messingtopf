@@ -8,7 +8,7 @@
     <title>messingtopf</title>
     <script>
       // the parameter to change between the chats and the friendlist. 1 = chats, 2 = friendlist
-      let curPage = 2;
+      let curPage = 1;
     </script>
     <script src="./js/functions.js"></script>
     <script src="./js/main.js"></script>
@@ -18,18 +18,14 @@
     <div id="parent">
       <!-- the div for the chats/friendlist. -->
       <div id="chatsfl" class="child">
-        <!-- just the header and a horizontal line. -->
+        <!-- just the header. -->
         <h1 id="chatsflH1"></h1>
-
-        <hr />
 
         <!-- the searchbar and submit button with another horizontal line. -->
         <div id="search">
           <input type="text" id="searchInput" placeholder="Name eingeben" />
           <button type="submit" id="searchSubmit">Suchen</button>
         </div>
-
-        <hr />
 
         <!-- the div where the chats or the friends are listed. -->
         <div id="chatsflDiv"></div>

@@ -58,14 +58,29 @@ function chatList() {
   getEl("chatsflH1").innerHTML = "Chats";
 
   user.chats.forEach((i) => {
+    let chatTime = new Date(i.lastMessage.createdAt)
+      .toLocaleTimeString()
+      .split(":");
+    chatTime.pop();
+    chatTime = chatTime.join(":");
+
+    if (Date.now() - i.lastMessage.createdAt > 1000 * 60 * 60 * 24)
+      chatTime = new Date(i.lastMessage.createdAt).toLocaleDateString();
+
     getEl("chatsflDiv").innerHTML += `
-          <div id="${i.users.filter((ii) => ii.id != user.id)[0].id}">
-            ${
-              i.users.filter((ii) => ii.id != user.id)[0].username +
-              " | " +
-              i.lastMsg.content
-            }
-            <hr />
+          <div id="${
+            i.users.filter((ii) => ii.id != user.id)[0].id
+          }" class="chatsflElement">
+            <p class="chatName"><b>${
+              i.users.filter((ii) => ii.id != user.id)[0].username
+            }</b></p>
+            <p class="chatMsg"><b>${
+              i.lastMessage.author.id == user.id
+                ? "Du"
+                : i.lastMessage.author.username
+            }:</b> ${
+      i.lastMessage.content
+    }</p><p class="chatDate">${chatTime}</p>
           </div>`;
   });
 }
@@ -76,9 +91,10 @@ function flList() {
 
   user.chats.forEach((i) => {
     getEl("chatsflDiv").innerHTML += `
-          <div id="${i.users.filter((ii) => ii.id != user.id)[0].id}">
-            ${i.users.filter((ii) => ii.id != user.id)[0].username}
-            <hr />
+          <div id="${
+            i.users.filter((ii) => ii.id != user.id)[0].id
+          }" class="chatsflElement">
+            <p>${i.users.filter((ii) => ii.id != user.id)[0].username}</p>
           </div>`;
   });
 }

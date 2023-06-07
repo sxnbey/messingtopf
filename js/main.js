@@ -1,33 +1,39 @@
 // just example chats, users and messages to work with. will be replaced later with the real data.
 
 let exampleUser = {
-  username: "exampleName",
+  username: "senbey",
   online: true,
+  deleted: false,
   unreadChats: [],
   friendList: [],
   chats: [],
-  id: 1686048332310,
+  createdAt: 1686116861929,
+  id: 1,
 };
 const exampleMsg = {
-  content: "example message content",
-  sentBy: exampleUser,
+  content: "Was geht bei dir?",
+  author: exampleUser,
   read: false,
-  id: 1686046981622,
+  deleted: false,
+  createdAt: 1670844864000,
+  id: 1,
 };
 let exampleChat = {
+  undreadMessages: [exampleMsg],
   users: [],
   messages: [exampleMsg],
-  lastMsg: exampleMsg,
-  undreadMessage: true,
-  id: 1686049202912,
+  lastMessage: exampleMsg,
+  id: 1,
 };
 const exampleUser2 = {
-  username: "exampleName2",
-  unreadChats: [exampleChat],
+  username: "xXGamerXx",
   online: true,
+  deleted: false,
+  unreadChats: [exampleChat],
   friendList: [exampleUser],
   chats: [exampleChat],
-  id: 1686048332311,
+  createdAt: 1686116861931,
+  id: 2,
 };
 exampleUser.friendList = [exampleUser2];
 exampleUser.chats = [exampleChat];

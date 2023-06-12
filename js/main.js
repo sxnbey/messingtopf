@@ -62,9 +62,18 @@ document.addEventListener("DOMContentLoaded", function () {
   );
 
   // i make an array where are all the objects with the id and value of each box of the statistic page.
-  // i use these objects to put the value in these boxes. => ./js/functions.js line
+  // i use these objects to put the value in these boxes. => ./js/functions.js line 107
 
-  [{ id: "sentMessagesCount", value: "" }];
+  [
+    { id: "sentMessagesCount", value: 123 },
+    { id: "receivedMessagesCount", value: 123 },
+    { id: "friendCount", value: 123 },
+    { id: "openChatCount", value: 123 },
+    { id: "registeredUserCount", value: 123 },
+    { id: "allSentMessagesCount", value: 123 },
+    { id: "onlineUserCount", value: 123 },
+    { id: "pageViewCount", value: 123 },
+  ].forEach((i) => addStats(i));
 });
 
 // as you recommended me one day, i put all the functions in a seperate file to make it easier to view and understand the code.

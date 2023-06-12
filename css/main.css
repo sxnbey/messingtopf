@@ -18,7 +18,7 @@ p {
   flex: 1 1 auto;
   position: relative;
   text-align: center;
-  height: 93vh;
+  height: 95vh;
   max-width: calc(100vw / 3);
 }
 
@@ -103,14 +103,17 @@ p {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  align-items: center;
   border-top: 0.063rem solid rgba(0, 0, 0, 0.3);
+  height: 90vh;
 }
 
 .box {
   width: 14vw;
   height: 7vw;
   margin: 2vh;
-  margin-top: 4vh;
+  margin-top: auto;
+  margin-bottom: auto;
   box-shadow: 0 0.2rem 0.6rem rgba(0, 0, 0, 0.3);
   display: flex;
   justify-content: center;
@@ -127,14 +130,15 @@ p {
 /* styling and positioning of the footer. */
 
 footer {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  width: 100vw;
-  height: 7vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 5vh;
   text-align: center;
-
   border-top: 0.063rem solid rgba(0, 0, 0, 0.3);
   background: rgba(0, 0, 0, 0.2);
   box-shadow: 0 0.25rem 2rem rgba(0, 0, 0, 0.1);

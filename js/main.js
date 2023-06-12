@@ -6,6 +6,7 @@ let exampleUser = {
   unreadChats: [],
   friendList: [],
   chats: [],
+
   createdAt: 1686116861929,
   id: 1,
 };
@@ -59,6 +60,11 @@ document.addEventListener("DOMContentLoaded", function () {
       flchatSwitch();
     })
   );
+
+  // i make an array where are all the objects with the id and value of each box of the statistic page.
+  // i use these objects to put the value in these boxes. => ./js/functions.js line
+
+  [{ id: "sentMessagesCount", value: "" }];
 });
 
 // as you recommended me one day, i put all the functions in a seperate file to make it easier to view and understand the code.

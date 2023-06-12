@@ -54,8 +54,12 @@ function buttonsFriendlist() {
 // these 2 functions manipulate the html to display the chats/friendlist.
 
 function chatList() {
-  getEl("chatsflDiv").innerHTML = "";
+  getEl("chatsflContent").innerHTML = "";
   getEl("chatsflH1").innerHTML = "Chats";
+
+  if (user.chats.length == 0)
+    return (getEl("chatsflContent").innerHTML =
+      "Du hast leider keine Chats. :(<br/><br/>Komm, fang an zu chatten!");
 
   user.chats.forEach((i) => {
     let chatTime = new Date(i.lastMessage.createdAt)
@@ -67,7 +71,7 @@ function chatList() {
     if (Date.now() - i.lastMessage.createdAt > 1000 * 60 * 60 * 24)
       chatTime = new Date(i.lastMessage.createdAt).toLocaleDateString();
 
-    getEl("chatsflDiv").innerHTML += `
+    getEl("chatsflContent").innerHTML += `
           <div id="${
             i.users.filter((ii) => ii.id != user.id)[0].id
           }" class="chatsflElement"><p class="chatName"><b>${
@@ -81,15 +85,25 @@ function chatList() {
 }
 
 function flList() {
-  getEl("chatsflDiv").innerHTML = "";
+  getEl("chatsflContent").innerHTML = "";
   getEl("chatsflH1").innerHTML = "Freundesliste";
 
+  if (user.friendList.length == 0)
+    return (getEl("chatsflContent").innerHTML =
+      "Du hast leider keine Chats. :(<br/><br/>Komm, fang an zu chatten!");
+
   user.chats.forEach((i) => {
-    getEl("chatsflDiv").innerHTML += `
+    getEl("chatsflContent").innerHTML += `
           <div id="${
             i.users.filter((ii) => ii.id != user.id)[0].id
           }" class="chatsflElement">
             <p>${i.users.filter((ii) => ii.id != user.id)[0].username}</p>
           </div>`;
   });
+}
+
+//  the function to add the value to the boxes on the statistic page.
+
+function addStats(obj) {
+  getEl(obj.id).innerHTML = obj.value;
 }

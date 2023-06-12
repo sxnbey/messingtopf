@@ -14,8 +14,8 @@
     <script src="./js/main.js"></script>
   </head>
   <body>
-    <!-- parent div for the 3 parts of the page. -->
-    <div id="parent">
+    <!-- mainParent div for the 3 parts of the page. -->
+    <div id="mainParent">
       <!-- the div for the chats/friendlist. -->
       <div id="chatsfl" class="child">
         <!-- just the header. -->
@@ -28,7 +28,7 @@
         </div>
 
         <!-- the div where the chats or the friends are listed. -->
-        <div id="chatsflDiv"></div>
+        <div id="chatsflContent"></div>
 
         <!-- the buttons to switch between chats and the friendlist. -->
         <div id="chatflSwitch">
@@ -39,9 +39,66 @@
 
       <!-- the div for the stats. -->
       <div id="stats" class="child">
-        <h1>stats</h1>
+        <h1>Messenger Statistiken</h1>
 
-        <hr />
+        <div id="statsContent" class="boxParent">
+          <div class="box">
+            <p>
+              Insgesamt von Dir gesendete Nachrichten:<br /><br /><span
+                id="sentMessagesCount"
+                >0</span
+              >
+            </p>
+          </div>
+          <div class="box">
+            <p>
+              Insgesamt erhaltene Nachrichten:<br /><br /><span
+                id="receivedMessagesCount"
+                >0</span
+              >
+            </p>
+          </div>
+          <div class="box">
+            <p>
+              Anzahl Deiner Freunde:<br /><br /><span id="friendCount">0</span>
+            </p>
+          </div>
+          <div class="box">
+            <p>
+              Anzahl offener Chats:<br /><br /><span id="openChatCount">0</span>
+            </p>
+          </div>
+          <div class="box">
+            <p>
+              Insgesamt registrierte Nutzer:<br /><br /><span
+                id="registeredUserCount"
+                >0</span
+              >
+            </p>
+          </div>
+          <div class="box">
+            <p>
+              Insgesamt gesendete Nachrichten:<br /><br /><span
+                id="allSentMessagesCount"
+                >0</span
+              >
+            </p>
+          </div>
+          <div class="box">
+            <p>
+              Aktuelle aktive Nutzer:<br /><br /><span id="onlineUserCount"
+                >0</span
+              >
+            </p>
+          </div>
+          <div class="box">
+            <p>
+              Anzahl der Seitenaufrufe:<br /><br /><span id="pageViewCount"
+                >0</span
+              >
+            </p>
+          </div>
+        </div>
       </div>
 
       <!-- the div for the changelog. -->

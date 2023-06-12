@@ -70,18 +70,13 @@ function chatList() {
     getEl("chatsflDiv").innerHTML += `
           <div id="${
             i.users.filter((ii) => ii.id != user.id)[0].id
-          }" class="chatsflElement">
-            <p class="chatName"><b>${
-              i.users.filter((ii) => ii.id != user.id)[0].username
-            }</b></p>
-            <p class="chatMsg"><b>${
-              i.lastMessage.author.id == user.id
-                ? "Du"
-                : i.lastMessage.author.username
-            }:</b> ${
+          }" class="chatsflElement"><p class="chatName"><b>${
+      i.users.filter((ii) => ii.id != user.id)[0].username
+    }</b></p><div class="chatContent"><p class="chatMsg"><b>${
+      i.lastMessage.author.id == user.id ? "Du" : i.lastMessage.author.username
+    }:</b> ${
       i.lastMessage.content
-    }</p><p class="chatDate">${chatTime}</p>
-          </div>`;
+    }</p><p class="chatDate">${chatTime}</p></div></div>`;
   });
 }
 

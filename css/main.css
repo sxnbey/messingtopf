@@ -2,6 +2,10 @@ body {
   margin: 0;
 }
 
+p {
+  font-size: 2vh;
+}
+
 /* this is to make the 3 child divs flex. */
 
 #parent {
@@ -58,28 +62,39 @@ body {
 /* styling for the listed chats */
 
 .chatsflElement {
-  height: 9vh;
+  display: flex;
+  flex-direction: column;
+  height: 11vh;
   border-bottom: 0.063rem solid rgba(0, 0, 0, 0.3);
 }
 
 .chatName {
   text-align: left;
-  padding: 1vh 0 1vh 1vh;
+  padding: 1vh 0 0 1vh;
   margin: 0;
-  font-size: large;
+  font-size: 3vh;
   border-bottom: 0.063rem solid rgba(0, 0, 0, 0.05);
 }
 
+.chatContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-grow: 1;
+}
+
 .chatMsg {
+  flex: 1;
   text-align: left;
-  padding: 1vh 0 1vh 1vh;
+  padding: 1.5vh 0 1vh 1vh;
   margin: 0;
+  font-size: 2.3vh;
 }
 
 .chatDate {
   text-align: right;
   margin: 0 1vh 0 0;
-  font-size: x-small;
+  font-size: 1.3vh;
 }
 
 /* styling and positioning of the footer. */

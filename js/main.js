@@ -3,7 +3,6 @@
 let exampleUser = {
   username: "senbey",
   online: true,
-  deleted: false,
   unreadChats: [],
   friendList: [],
   chats: [],
@@ -15,6 +14,7 @@ const exampleMsg = {
   author: exampleUser,
   read: false,
   deleted: false,
+  edited: { date: Date.now(), contentBefore: "" },
   createdAt: 1670844864000,
   id: 1,
 };
@@ -28,7 +28,6 @@ let exampleChat = {
 const exampleUser2 = {
   username: "xXGamerXx",
   online: true,
-  deleted: false,
   unreadChats: [exampleChat],
   friendList: [exampleUser],
   chats: [exampleChat],

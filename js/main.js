@@ -69,14 +69,14 @@ document.addEventListener("DOMContentLoaded", function () {
   // i use these objects to put the value in these boxes. => ./js/functions.js line 107
 
   [
-    { id: "sentMessagesCount", value: 123 },
-    { id: "receivedMessagesCount", value: 123 },
-    { id: "friendCount", value: 123 },
-    { id: "openChatCount", value: 123 },
-    { id: "registeredUserCount", value: 123 },
-    { id: "allSentMessagesCount", value: 123 },
-    { id: "onlineUserCount", value: 123 },
-    { id: "pageViewCount", value: 123 },
+    { id: "sentMessagesCount", value: 187 },
+    { id: "receivedMessagesCount", value: 187 },
+    { id: "friendCount", value: 187 },
+    { id: "openChatCount", value: 187 },
+    { id: "registeredUserCount", value: 187 },
+    { id: "allSentMessagesCount", value: 187 },
+    { id: "onlineUserCount", value: 187 },
+    { id: "pageViewCount", value: 187 },
   ].forEach((i) => addStats(i));
 
   // the hover animation for the boxes.
@@ -85,9 +85,9 @@ document.addEventListener("DOMContentLoaded", function () {
     i.addEventListener("mousemove", function (e) {
       const rect = i.getBoundingClientRect();
 
-      i.style.transform = `perspective(1000px) rotateX(${
-        (e.clientY - (rect.top + rect.height / 2)) / 10
-      }deg) rotateY(${(e.clientX - (rect.left + rect.width / 2)) / 10}deg)`;
+      i.style.transform = `perspective(500px) rotateX(${
+        (e.clientY - (rect.top + rect.height / 2)) / 5
+      }deg) rotateY(${(e.clientX - (rect.left + rect.width / 2)) / 5}deg)`;
     });
 
     i.addEventListener("mouseout", () => {

@@ -102,8 +102,8 @@ function flList() {
   });
 }
 
-//  the function to add the value to the boxes on the statistic page.
+// the function to add the value to the boxes on the statistic page.
 
-function addStats(obj) {
-  getEl(obj.id).innerHTML = obj.value;
+function addStats(box) {
+  getEl(box.id).innerHTML = box.value;
 }

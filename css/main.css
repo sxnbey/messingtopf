@@ -68,6 +68,10 @@ p {
   border-bottom: 0.063rem solid rgba(0, 0, 0, 0.3);
 }
 
+.chat {
+  cursor: pointer;
+}
+
 .chatName {
   text-align: left;
   padding: 1vh 0 0 1vh;

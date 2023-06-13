@@ -1,12 +1,20 @@
 // just example chats, users and messages to work with. will be replaced later with the real data.
 
+let exampleUser3 = {
+  username: "Susher",
+  online: true,
+  unreadChats: [],
+  friendList: [],
+  chats: [],
+  createdAt: 1686116861929,
+  id: 1,
+};
 let exampleUser = {
   username: "senbey",
   online: true,
   unreadChats: [],
   friendList: [],
   chats: [],
-
   createdAt: 1686116861929,
   id: 1,
 };
@@ -35,19 +43,29 @@ const exampleUser2 = {
   createdAt: 1686116861931,
   id: 2,
 };
-exampleUser.friendList = [exampleUser2];
+exampleUser.friendList = [exampleUser2, exampleUser3];
 exampleUser.chats = [exampleChat];
 exampleChat.users = [exampleUser, exampleUser2];
 exampleChat.unreadChats = [exampleChat];
 
-// declaration of the user. has to be outside of a block to be global.
+// declaration of the global variables.
 
 const user = exampleUser;
+const stats = [
+  { id: "sentMessagesCount", value: 187 },
+  { id: "receivedMessagesCount", value: 187 },
+  { id: "friendCount", value: 187 },
+  { id: "openChatCount", value: 187 },
+  { id: "registeredUserCount", value: 187 },
+  { id: "allSentMessagesCount", value: 187 },
+  { id: "onlineUserCount", value: 187 },
+  { id: "pageViewCount", value: 187 },
+];
 
 // after this line, the main script starts.
 
 document.addEventListener("DOMContentLoaded", function () {
-  // declaration of everything i need.
+  // declaration of everything that need to be in this block.
 
   const statBoxes = document.querySelectorAll(".box");
 
@@ -65,19 +83,9 @@ document.addEventListener("DOMContentLoaded", function () {
     })
   );
 
-  // i make an array where are all the objects with the id and value of each box of the statistic page.
-  // i use these objects to put the value in these boxes. => ./js/functions.js line 107
+  // i use these array with objects from line 45 to put the value in the statistic boxes. => ./js/functions.js line 107
 
-  [
-    { id: "sentMessagesCount", value: 187 },
-    { id: "receivedMessagesCount", value: 187 },
-    { id: "friendCount", value: 187 },
-    { id: "openChatCount", value: 187 },
-    { id: "registeredUserCount", value: 187 },
-    { id: "allSentMessagesCount", value: 187 },
-    { id: "onlineUserCount", value: 187 },
-    { id: "pageViewCount", value: 187 },
-  ].forEach((i) => addStats(i));
+  stats.forEach((i) => addStats(i));
 
   // the hover animation for the boxes.
 
@@ -86,7 +94,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const rect = i.getBoundingClientRect();
 
       i.style.transform = `perspective(500px) rotateX(${
-        (e.clientY - (rect.top + rect.height / 2)) / 5
+        (-1 * (e.clientY - (rect.top + rect.height / 2))) / 5
       }deg) rotateY(${(e.clientX - (rect.left + rect.width / 2)) / 5}deg)`;
     });
 

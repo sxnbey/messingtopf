@@ -8,13 +8,13 @@ function getEl(input) {
 // i made it scalable so it can switch between chats/friendlist on the page load with the change of a single parameter.
 // the scalability makes it even easier to put a third "page" in there, for like group chats or whatever.
 
-function flchatSwitch(onload = false) {
+function flchatSwitch(useCurrentParam = false) {
   switch (curPage) {
     default:
       break;
 
     case 1:
-      if (onload) {
+      if (useCurrentParam) {
         buttonsChatList();
         chatList();
       } else {
@@ -26,7 +26,7 @@ function flchatSwitch(onload = false) {
       break;
 
     case 2:
-      if (onload) {
+      if (useCurrentParam) {
         buttonsFriendlist();
         flList();
       } else {
@@ -51,17 +51,25 @@ function buttonsFriendlist() {
   getEl("flButton").disabled = true;
 }
 
-// these 2 functions manipulate the html to display the chats/friendlist.
+// these 2 functions manipulate the html to display the chats/friendlist. i made it scalable too, so it can be used
+// for multiple things without typing code 2 times.
 
-function chatList() {
+function chatList(toList = user.chats, extraParagraph = false) {
   getEl("chatsflContent").innerHTML = "";
   getEl("chatsflH1").innerHTML = "Chats";
 
   if (user.chats.length == 0)
     return (getEl("chatsflContent").innerHTML =
-      "Du hast leider keine Chats. :(<br/><br/>Komm, fang an zu chatten!");
+      "Du hast leider noch keine Chats. :(<br/><br/>Komm, fang an zu chatten!");
 
-  user.chats.forEach((i) => {
+  if (extraParagraph)
+    getEl(
+      "chatsflContent"
+    ).innerHTML += `<p class="extraParagraph">${extraParagraph}</p>`;
+
+  toList.forEach((i) => {
+    const oUser = i.users.filter((ii) => ii.id != user.id)[0];
+    const lastAuthor = i.lastMessage.author;
     let chatTime = new Date(i.lastMessage.createdAt)
       .toLocaleTimeString()
       .split(":");
@@ -72,32 +80,35 @@ function chatList() {
       chatTime = new Date(i.lastMessage.createdAt).toLocaleDateString();
 
     getEl("chatsflContent").innerHTML += `
-          <div id="${
-            i.users.filter((ii) => ii.id != user.id)[0].id
-          }" class="chatsflElement"><p class="chatName"><b>${
-      i.users.filter((ii) => ii.id != user.id)[0].username
+          <div id="${oUser.id}" class="chatsflElement chat" title="Chat mit ${
+      oUser.username
+    } öffnen" onclick="openChat(${oUser.id})"><p class="chatName"><b>${
+      oUser.username
     }</b></p><div class="chatContent"><p class="chatMsg"><b>${
-      i.lastMessage.author.id == user.id ? "Du" : i.lastMessage.author.username
+      lastAuthor.id == user.id ? "Du" : lastAuthor.username
     }:</b> ${
       i.lastMessage.content
     }</p><p class="chatDate">${chatTime}</p></div></div>`;
   });
 }
 
-function flList() {
+function flList(toList = user.friendList, extraParagraph = false) {
   getEl("chatsflContent").innerHTML = "";
   getEl("chatsflH1").innerHTML = "Freundesliste";
 
   if (user.friendList.length == 0)
     return (getEl("chatsflContent").innerHTML =
-      "Du hast leider keine Chats. :(<br/><br/>Komm, fang an zu chatten!");
+      "Du hast leider noch keine Freunde. :(<br/><br/>Komm, füge jemanden als Freund hinzu!");
 
-  user.chats.forEach((i) => {
+  if (extraParagraph)
+    getEl(
+      "chatsflContent"
+    ).innerHTML += `<p class="extraParagraph">${extraParagraph}</p>`;
+
+  toList.forEach((i) => {
     getEl("chatsflContent").innerHTML += `
-          <div id="${
-            i.users.filter((ii) => ii.id != user.id)[0].id
-          }" class="chatsflElement">
-            <p>${i.users.filter((ii) => ii.id != user.id)[0].username}</p>
+          <div class="chatsflElement">
+            <p>${i.username}</p>
           </div>`;
   });
 }
@@ -106,4 +117,68 @@ function flList() {
 
 function addStats(box) {
   getEl(box.id).innerHTML = box.value;
+}
+
+// the function to redirect to the chat.
+
+function openChat(uid) {
+  console.log(`https://messingtopf.senbey.net/chat?uid=${uid}`);
+}
+
+// search function.
+
+function search() {
+  const toSearch = getEl("searchInput").value.toLowerCase();
+  let filteredUser;
+  let whereSearch;
+
+  if (!toSearch)
+    return (getEl("chatsflContent").innerHTML =
+      "Bitte gib etwas zum Suchen an! | <a onclick='flchatSwitch(true)'>🔙</a>");
+
+  switch (curPage) {
+    default:
+      break;
+
+    case 1:
+      whereSearch = "chats";
+      break;
+
+    case 2:
+      whereSearch = "friendList";
+      break;
+  }
+
+  if (whereSearch == "chats")
+    filteredUser = user.chats.filter((i) =>
+      i.users.some((ii) => ii.username.toLowerCase().includes(toSearch))
+    );
+  else
+    filteredUser = user.friendList.filter((i) =>
+      i.username.toLowerCase().includes(toSearch)
+    );
+
+  if (filteredUser.length == 0)
+    return (getEl("chatsflContent").innerHTML = `Es wurden keine ${
+      whereSearch == "chats" ? "Chats" : "Freunde"
+    } mit dem Namen "${toSearch}" gefunden. | <a onclick="flchatSwitch(true)">🔙</a>`);
+
+  if (whereSearch == "chats")
+    chatList(
+      filteredUser,
+      `Es wurde${filteredUser.length == 1 ? "" : "n"} ${
+        filteredUser.length
+      } Chat${
+        filteredUser.length == 1 ? "" : "s"
+      } gefunden! | <a onclick="flchatSwitch(true)">🔙</a>`
+    );
+  else
+    flList(
+      filteredUser,
+      `Es wurde${filteredUser.length == 1 ? "" : "n"} ${
+        filteredUser.length
+      } Freund${
+        filteredUser.length == 1 ? "" : "e"
+      } gefunden! | <a onclick="flchatSwitch(true)">🔙</a>`
+    );
 }

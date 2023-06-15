@@ -1,0 +1,5 @@
+- chat
+- changelog
+- alle daten, die niclas braucht, raussuschen
+- anmeldefenster jakub
+- erkennung wenn jemand schreibt

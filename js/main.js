@@ -4,7 +4,7 @@ let exampleUser3 = {
   username: "Susher",
   online: true,
   unreadChats: [],
-  friendList: [],
+  friendlist: [],
   chats: [],
   createdAt: 1686116861929,
   id: 1,
@@ -13,7 +13,7 @@ let exampleUser = {
   username: "senbey",
   online: true,
   unreadChats: [],
-  friendList: [],
+  friendlist: [],
   chats: [],
   createdAt: 1686116861929,
   id: 1,
@@ -38,12 +38,13 @@ const exampleUser2 = {
   username: "xXGamerXx",
   online: true,
   unreadChats: [exampleChat],
-  friendList: [exampleUser],
+  friendlist: [exampleUser],
   chats: [exampleChat],
   createdAt: 1686116861931,
   id: 2,
 };
-exampleUser.friendList = [exampleUser2, exampleUser3];
+const system = { users: [exampleUser, exampleUser2, exampleUser3] };
+exampleUser.friendlist = [exampleUser2, exampleUser3];
 exampleUser.chats = [exampleChat];
 exampleChat.users = [exampleUser, exampleUser2];
 exampleChat.unreadChats = [exampleChat];
@@ -52,14 +53,14 @@ exampleChat.unreadChats = [exampleChat];
 
 const user = exampleUser;
 const stats = [
-  { id: "sentMessagesCount", value: 187 },
-  { id: "receivedMessagesCount", value: 187 },
-  { id: "friendCount", value: 187 },
-  { id: "openChatCount", value: 187 },
-  { id: "registeredUserCount", value: 187 },
-  { id: "allSentMessagesCount", value: 187 },
-  { id: "onlineUserCount", value: 187 },
-  { id: "pageViewCount", value: 187 },
+  { id: "sentMessagesCount", value: 2.742 },
+  { id: "receivedMessagesCount", value: 2.742 },
+  { id: "friendCount", value: 2.742 },
+  { id: "openChatCount", value: 2.742 },
+  { id: "registeredUserCount", value: 2.742 },
+  { id: "allSentMessagesCount", value: 2.742 },
+  { id: "onlineUserCount", value: 2.742 },
+  { id: "pageViewCount", value: 2.742 },
 ];
 
 // after this line, the main script starts.
@@ -98,7 +99,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }deg) rotateY(${(e.clientX - (rect.left + rect.width / 2)) / 5}deg)`;
     });
 
-    i.addEventListener("mouseout", () => {
+    i.addEventListener("mouseout", function () {
       i.style.transform = "none";
     });
   });

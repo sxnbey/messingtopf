@@ -55,16 +55,16 @@ function buttonsFriendlist() {
 // for multiple things without typing code 2 times.
 
 function chatList(toList = user.chats, extraParagraph = false) {
-  getEl("chatsflContent").innerHTML = "";
-  getEl("chatsflH1").innerHTML = "Chats";
+  getEl("leftPageContent").innerHTML = "";
+  getEl("leftPageH1").innerHTML = "Chats";
 
   if (user.chats.length == 0)
-    return (getEl("chatsflContent").innerHTML =
+    return (getEl("leftPageContent").innerHTML =
       "Du hast leider noch keine Chats. :(<br/><br/>Komm, fang an zu chatten!");
 
   if (extraParagraph)
     getEl(
-      "chatsflContent"
+      "leftPageContent"
     ).innerHTML += `<p class="extraParagraph">${extraParagraph}</p>`;
 
   toList.forEach((i) => {
@@ -79,10 +79,10 @@ function chatList(toList = user.chats, extraParagraph = false) {
     if (Date.now() - i.lastMessage.createdAt > 1000 * 60 * 60 * 24)
       chatTime = new Date(i.lastMessage.createdAt).toLocaleDateString();
 
-    getEl("chatsflContent").innerHTML += `
-          <div id="${oUser.id}" class="chatsflElement chat" title="Chat mit ${
+    getEl("leftPageContent").innerHTML += `
+          <div id="${oUser.id}" class="leftPageElement chat" title="Chat mit ${
       oUser.username
-    } öffnen" onclick="openChat(${oUser.id})"><p class="chatName"><b>${
+    } öffnen" onclick="openChat(${i.id})"><p class="chatName"><b>${
       oUser.username
     }</b></p><div class="chatContent"><p class="chatMsg"><b>${
       lastAuthor.id == user.id ? "Du" : lastAuthor.username
@@ -92,22 +92,22 @@ function chatList(toList = user.chats, extraParagraph = false) {
   });
 }
 
-function flList(toList = user.friendList, extraParagraph = false) {
-  getEl("chatsflContent").innerHTML = "";
-  getEl("chatsflH1").innerHTML = "Freundesliste";
+function flList(toList = user.friendlist, extraParagraph = false) {
+  getEl("leftPageContent").innerHTML = "";
+  getEl("leftPageH1").innerHTML = "Freundesliste";
 
-  if (user.friendList.length == 0)
-    return (getEl("chatsflContent").innerHTML =
+  if (user.friendlist.length == 0)
+    return (getEl("leftPageContent").innerHTML =
       "Du hast leider noch keine Freunde. :(<br/><br/>Komm, füge jemanden als Freund hinzu!");
 
   if (extraParagraph)
     getEl(
-      "chatsflContent"
+      "leftPageContent"
     ).innerHTML += `<p class="extraParagraph">${extraParagraph}</p>`;
 
   toList.forEach((i) => {
-    getEl("chatsflContent").innerHTML += `
-          <div class="chatsflElement">
+    getEl("leftPageContent").innerHTML += `
+          <div class="leftPageElement">
             <p>${i.username}</p>
           </div>`;
   });
@@ -121,11 +121,11 @@ function addStats(box) {
 
 // the function to redirect to the chat.
 
-function openChat(uid) {
-  console.log(`https://messingtopf.senbey.net/chat?uid=${uid}`);
+function openChat(chatid) {
+  console.log(`https://messingtopf.senbey.net/chat?chatid=${chatid}`);
 }
 
-// search function.
+// the function to search for chats, user and friends.
 
 function search() {
   const toSearch = getEl("searchInput").value.toLowerCase();
@@ -133,7 +133,7 @@ function search() {
   let whereSearch;
 
   if (!toSearch)
-    return (getEl("chatsflContent").innerHTML =
+    return (getEl("leftPageContent").innerHTML =
       "Bitte gib etwas zum Suchen an! | <a onclick='flchatSwitch(true)'>🔙</a>");
 
   switch (curPage) {
@@ -142,43 +142,63 @@ function search() {
 
     case 1:
       whereSearch = "chats";
+
+      filteredUser = user.chats.filter((i) =>
+        i.users.some((ii) => ii.username.toLowerCase().includes(toSearch))
+      );
       break;
 
     case 2:
-      whereSearch = "friendList";
+      whereSearch = "friendlist";
+
+      filteredUser = user.friendlist.filter((i) =>
+        i.username.toLowerCase().includes(toSearch)
+      );
+
+      break;
+
+    case 3:
+      whereSearch = "users";
       break;
   }
 
-  if (whereSearch == "chats")
-    filteredUser = user.chats.filter((i) =>
-      i.users.some((ii) => ii.username.toLowerCase().includes(toSearch))
-    );
-  else
-    filteredUser = user.friendList.filter((i) =>
-      i.username.toLowerCase().includes(toSearch)
-    );
-
   if (filteredUser.length == 0)
-    return (getEl("chatsflContent").innerHTML = `Es wurden keine ${
-      whereSearch == "chats" ? "Chats" : "Freunde"
-    } mit dem Namen "${toSearch}" gefunden. | <a onclick="flchatSwitch(true)">🔙</a>`);
+    return (getEl("leftPageContent").innerHTML = `Es wurden kein${
+      filteredUser.length == 1 ? "" : "e"
+    } ${createText()} mit dem Namen "${toSearch}" gefunden. | <a onclick="flchatSwitch(true)">🔙</a>`);
 
-  if (whereSearch == "chats")
-    chatList(
-      filteredUser,
-      `Es wurde${filteredUser.length == 1 ? "" : "n"} ${
-        filteredUser.length
-      } Chat${
-        filteredUser.length == 1 ? "" : "s"
-      } gefunden! | <a onclick="flchatSwitch(true)">🔙</a>`
-    );
-  else
-    flList(
-      filteredUser,
-      `Es wurde${filteredUser.length == 1 ? "" : "n"} ${
-        filteredUser.length
-      } Freund${
-        filteredUser.length == 1 ? "" : "e"
-      } gefunden! | <a onclick="flchatSwitch(true)">🔙</a>`
-    );
+  execute();
+
+  // the functions to create the text and call the functions to change the page.
+
+  function execute() {
+    const text = `Es wurde${filteredUser.length == 1 ? "" : "n"} ${
+      filteredUser.length
+    } ${createText()} gefunden! | <a onclick="flchatSwitch(true)">🔙</a>`;
+
+    switch (whereSearch) {
+      default:
+        break;
+
+      case "chats":
+        chatList(filteredUser, text);
+        break;
+
+      case "friendlist":
+        flList(filteredUser, text);
+        break;
+
+      case "users":
+        userList(filteredUser, text);
+        break;
+    }
+  }
+
+  function createText() {
+    return whereSearch == "chats"
+      ? `Chat${filteredUser.length == 1 ? "" : "s"}`
+      : whereSearch == "users"
+      ? "Nutzer"
+      : `Freund${filteredUser.length == 1 ? "" : "e"}`;
+  }
 }

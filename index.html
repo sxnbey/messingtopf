@@ -12,28 +12,36 @@
     </script>
     <script src="./js/functions.js"></script>
     <script src="./js/main.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <!-- mainParent div for the 3 parts of the page. -->
     <div id="mainParent">
-      <!-- the div for the chats/friendlist. -->
-      <div id="chatsfl" class="child">
+      <!-- the div for the left part. -->
+      <div id="leftPage" class="child">
         <!-- just the header. -->
-        <h1 id="chatsflH1"></h1>
+        <h1 id="leftPageH1"></h1>
 
-        <!-- the searchbar and submit button with another horizontal line. -->
+        <!-- the searchbar and submit button. -->
         <div id="search">
           <input type="text" id="searchInput" placeholder="Name eingeben" />
           <button type="submit" onclick="search()">Suchen</button>
         </div>
 
-        <!-- the div where the chats or the friends are listed. -->
-        <div id="chatsflContent"></div>
+        <!-- the div where the left content is listed. -->
+        <div id="leftPageContent"></div>
 
-        <!-- the buttons to switch between chats and the friendlist. -->
-        <div id="chatflSwitch">
-          <button id="chatButton">📝</button>
-          <button id="flButton">👥</button>
+        <!-- the buttons to switch between the left content. -->
+        <div id="leftPageSwitch">
+          <button id="chatButton" title="Auf die Chats umschalten">📝</button>
+          <button id="flButton" title="Auf die Freundesliste umschalten">
+            👥
+          </button>
         </div>
       </div>
 
@@ -113,7 +121,8 @@
     <footer id="footer">
       <p>
         made with a bit of brain by
-        <a href="https://senbey.net" target="_blank">senbey</a> and Czubik
+        <a href="https://senbey.net" target="_blank">senbey</a> and
+        <a href="https://github.com/Czubik" target="_blank">Czubik</a>
       </p>
     </footer>
   </body>

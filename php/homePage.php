@@ -17,6 +17,7 @@ if(!isset($_SESSION['username'])){
       // the parameter to change between the chats and the friendlist. 1 = chats, 2 = friendlist
       let curPage = 2;
     </script>
+    <script src="../js/jQuery.min.js"></script>
     <script src="../js/functions.js"></script>
     <script src="../js/main.js"></script>
   </head>

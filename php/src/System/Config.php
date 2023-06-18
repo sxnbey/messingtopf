@@ -9,6 +9,6 @@ class Config{
         $username ='root';
         $password ='';
 
-        $this->pdo = new \PDO('mysql:host=localhost;dbname=chat', 'root', '');
+        $this->pdo = new \PDO('mysql:host=' .$host . ';dbname='.$db. '', $username , $password);
     }
 }

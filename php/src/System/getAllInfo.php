@@ -11,7 +11,7 @@
             $friendsInfo = $this->getFriendsList($username);
             $allUsers = $this->getAllUsers($username);
             $lastMessage = $this->getLastMessage($username);
-            return array('currentUser' => $userInfo, 'allChats' => $chatsInfo, 'friendsIds' => $friendsInfo, 'allUsersData' => $allUsers);
+            return array('currentUser' => $userInfo, 'allChats' => $chatsInfo, 'friendsIds' => $friendsInfo, 'allUsersData' => $allUsers, "lastMessage" => $lastMessage);
         }
 
         private function getUserInfo($username){
@@ -47,7 +47,10 @@
         }
 
         private function getLastMessage($username){
-            $sql = $this->pdo->prepare("SELECT chats.id, message, send_by_user_id, send_at, seen, deleted FROM chats, messages WHERE chats.id = chat_id GROUP BY chat_id ORDER BY send_at ASC");
+            $sql = $this->pdo->prepare("SELECT m1.chat_id AS chat_id, m1.message, m1.send_by_user_id, m1.send_at, m1.seen, m1.deleted
+            FROM messages m1 LEFT JOIN messages m2
+             ON (m1.chat_id = m2.chat_id AND m1.id < m2.id), chats c
+            WHERE m1.chat_id = c.id AND m2.id IS NULL AND (c.user_id_start = 68 OR c.user_id_second = 68);");
             $sql->execute();
             $chatsInfo = $sql->fetchAll();
 

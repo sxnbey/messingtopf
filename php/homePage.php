@@ -132,6 +132,9 @@ if(!isset($_SESSION['username'])){
         <a href="https://senbey.net" target="_blank">senbey</a> and
         <a href="https://github.com/Czubik" target="_blank">Czubik</a>
       </p>
+      <form action="logout.php" method="post">
+        <input autocomplete="off" type="submit" value="Abmelden!">
+      </form>
     </footer>
   </body>
 </html>

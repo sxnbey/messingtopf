@@ -3,7 +3,7 @@ session_start();
 
 include_once 'src/System/getCurrentUser.php';
 include_once 'src/System/checkIfCorrectCredentials.php';
-
+include_once 'src/System/setUserToOnline.php';
 $error = false;
 $errorText;
 
@@ -20,6 +20,9 @@ else{
     $getCurrentUser = new \System\getCurrentUser;
     $currentUser = $getCurrentUser->getCurrentUserId($username);
     $_SESSION['username'] = $currentUser;
+    $insertNewAccountClass = new \System\setUserToOnline;
+    $username = $_SESSION['username'];
+    $insertNewAccountClass->setUserToOnline($username);
     header('Location: homePage.php');
 }
 

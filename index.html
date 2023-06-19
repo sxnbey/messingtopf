@@ -8,49 +8,123 @@
     <title>messingtopf</title>
     <script>
       // the parameter to change between the chats and the friendlist. 1 = chats, 2 = friendlist
-      let curPage = 2;
+      let curPage = 1;
     </script>
     <script src="./js/functions.js"></script>
     <script src="./js/main.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
-    <!-- parent div for the 3 parts of the page. -->
-    <div id="parent">
-      <!-- the div for the chats/friendlist. -->
-      <div id="chatsfl" class="child">
-        <!-- just the header and a horizontal line. -->
-        <h1 id="chatsflH1"></h1>
+    <!-- mainParent div for the 3 parts of the page. -->
+    <div id="mainParent">
+      <!-- the div for the left part. -->
+      <div id="leftPage" class="child">
+        <!-- just the header. -->
+        <h1 id="leftPageH1"></h1>
 
-        <hr />
-
-        <!-- the searchbar and submit button with another horizontal line. -->
+        <!-- the searchbar and submit button. -->
         <div id="search">
           <input type="text" id="searchInput" placeholder="Name eingeben" />
-          <button type="submit" id="searchSubmit">Suchen</button>
+          <button type="submit" onclick="search()">Suchen</button>
         </div>
 
-        <hr />
+        <!-- the div where the left content is listed. -->
+        <div id="leftPageContent"></div>
 
-        <!-- the div where the chats or the friends are listed. -->
-        <div id="chatsflDiv"></div>
-
-        <!-- the buttons to switch between chats and the friendlist. -->
-        <div id="chatflSwitch">
-          <button id="chatButton">📝</button>
-          <button id="flButton">👥</button>
+        <!-- the buttons to switch between the left content. -->
+        <div id="leftPageSwitch">
+          <button id="chatButton" title="Auf die Chats umschalten">📝</button>
+          <button id="flButton" title="Auf die Freundesliste umschalten">
+            👥
+          </button>
         </div>
       </div>
 
       <!-- the div for the stats. -->
       <div id="stats" class="child">
-        <h1>stats</h1>
+        <h1>Messenger Statistiken</h1>
+
+        <div id="statsContent" class="boxParent">
+          <!-- every box with a statistic inside it. -->
+          <div class="box">
+            <p>
+              Insgesamt von Dir gesendete Nachrichten:<br /><br /><span
+                id="sentMessagesCount"
+                >0</span
+              >
+            </p>
+          </div>
+          <div class="box">
+            <p>
+              Insgesamt erhaltene Nachrichten:<br /><br /><span
+                id="receivedMessagesCount"
+                >0</span
+              >
+            </p>
+          </div>
+          <div class="box">
+            <p>
+              Anzahl Deiner Freunde:<br /><br /><span id="friendCount">0</span>
+            </p>
+          </div>
+          <div class="box">
+            <p>
+              Anzahl offener Chats:<br /><br /><span id="openChatCount">0</span>
+            </p>
+          </div>
+          <div class="box">
+            <p>
+              Insgesamt registrierte Nutzer:<br /><br /><span
+                id="registeredUserCount"
+                >0</span
+              >
+            </p>
+          </div>
+          <div class="box">
+            <p>
+              Insgesamt gesendete Nachrichten:<br /><br /><span
+                id="allSentMessagesCount"
+                >0</span
+              >
+            </p>
+          </div>
+          <div class="box">
+            <p>
+              Aktuelle aktive Nutzer:<br /><br /><span id="onlineUserCount"
+                >0</span
+              >
+            </p>
+          </div>
+          <div class="box">
+            <p>
+              Anzahl der Seitenaufrufe:<br /><br /><span id="pageViewCount"
+                >0</span
+              >
+            </p>
+          </div>
+        </div>
       </div>
 
       <!-- the div for the changelog. -->
       <div id="changelog" class="child">
-        <h1>changelog</h1>
+        <h1>Änderungsprotokoll</h1>
+
+        <hr />
       </div>
     </div>
+
+    <footer id="footer">
+      <p>
+        made with a bit of brain by
+        <a href="https://senbey.net" target="_blank">senbey</a> and
+        <a href="https://github.com/Czubik" target="_blank">Czubik</a>
+      </p>
+    </footer>
   </body>
 </html>
 

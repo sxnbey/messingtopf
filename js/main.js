@@ -1,4 +1,3 @@
-// just example chats, users and messages to work with. will be replaced later with the real data.
 let user = {};
 let system = {
   pages: [
@@ -8,9 +7,11 @@ let system = {
   ],
 };
 
-// declaration of the current page
+// declaration of the current page.
 
 system.curPage = system.pages[0];
+
+// the statistics, still hardcoded tho, will change later.
 
 const stats = [
   { id: "sentMessagesCount", value: 2.742 },
@@ -59,7 +60,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   flchatSwitch();
 
-  // adds an event listener to the chat and friendlist buttons so the page changes to the friendlist/chats with a button press.
+  // adds an event listener to the buttons so the page changes to the friendlist/chats with a button press.
 
   ["chats", "friendlist", "add"].forEach((i) =>
     getEl(i).addEventListener("click", function (e) {
@@ -87,6 +88,3 @@ document.addEventListener("DOMContentLoaded", async function () {
     });
   });
 });
-
-// as you recommended me one day, i put all the functions in a seperate file to make it easier to view and understand the code.
-// => ./js/functions.js

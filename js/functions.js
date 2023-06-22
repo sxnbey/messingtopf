@@ -4,9 +4,8 @@ function getEl(input) {
   return document.getElementById(input);
 }
 
-// this function switches between the pages with a switch case.
-// i made it scalable so it can switch between chats/friendlist on the page load with the change of a single parameter.
-// the scalability makes it even easier to put a third "page" in there, for like group chats or whatever.
+// this function switches between the pages.
+// the scalability makes it even easier to put a 4th page in there, for like group chats or whatever.
 
 function flchatSwitch(target = false) {
   const lists = {
@@ -181,7 +180,7 @@ function search() {
   }
 }
 
-// the functions to create all the data of the user
+// the functions to create all the data of the user.
 
 function createChatData(chats) {
   user.chats = [];

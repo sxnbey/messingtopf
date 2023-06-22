@@ -11,7 +11,27 @@
             $friendsInfo = $this->getFriendsList($username);
             $allUsers = $this->getAllUsers($username);
             $lastMessage = $this->getLastMessage($username);
-            return array('currentUser' => $userInfo, 'allChats' => $chatsInfo, 'friendsIds' => $friendsInfo, 'allUsersData' => $allUsers, "lastMessage" => $lastMessage);
+            $allChangelogs = $this->getAllChangelogs();
+            $currentUserSendMessages = $this->messagesSendByUser($username);
+            $currentUserGetMessages = $this->messagesGotByUser($username);
+            $countOfYourFriends = $this->countOfYourFriends($username);
+            $countOfOpenChats = $this->countOfOpenChats($username);
+            $getAllRegisterdUsers = $this->getAllRegisterdUsers();
+            $getAllSendedMessages = $this->getAllSendedMessages();
+            $getAllOnlineUsers = $this->getAllOnlineUsers();
+            return array('currentUser' => $userInfo,
+                        'allChats' => $chatsInfo,
+                        'friendsIds' => $friendsInfo, 
+                        'allUsersData' => $allUsers, 
+                        "lastMessage" => $lastMessage, 
+                        "allChangelogs" => $allChangelogs,
+                        "currentUserSendMessages" => $currentUserSendMessages,
+                        'currentUserGetMessages' => $currentUserGetMessages,
+                        'countOfYourFriends' => $countOfYourFriends,
+                        'countOfOpenChats' => $countOfOpenChats,
+                        'getAllRegisterdUsers' => $getAllRegisterdUsers,
+                        'getAllSendedMessages' => $getAllSendedMessages,
+                        'getAllOnlineUsers' => $getAllOnlineUsers);
         }
 
         private function getUserInfo($username){
@@ -55,5 +75,88 @@
             $chatsInfo = $sql->fetchAll();
 
             return $chatsInfo;
+        }
+
+        private function getAllChangelogs(){
+            $sql = $this->pdo->prepare("SELECT * FROM changelog");
+            $sql->execute();
+            $allChangelogs = $sql->fetchAll();
+
+            return $allChangelogs;
+        }
+
+        private function messagesSendByUser($username){
+            $sql = $this->pdo->prepare("SELECT COUNT(*) AS von_dir_gesendete FROM messages WHERE send_by_user_id = $username");
+            $sql->execute();
+            $currentUserSendMessages = $sql->fetchAll();
+
+            return $currentUserSendMessages;
+        }
+        
+        private function messagesGotByUser($username){
+            $sql = $this->pdo->prepare("SELECT COUNT(*) AS erhaltene_nachrichten
+            FROM messages,chats
+            WHERE chats.id = messages.chat_id AND send_by_user_id != $username AND (user_id_start = $username OR user_id_second = $username)");
+            $sql->execute();
+            $currentUserGetMessages = $sql->fetchAll();
+
+            return $currentUserGetMessages;
+        }
+
+        private function countOfYourFriends($username){
+            $sql = $this->pdo->prepare("SELECT COUNT(*) AS count_of_your_friends
+            FROM friends
+            WHERE user_id_sender = $username OR user_id_accepter = $username");
+            $sql->execute();
+            $countOfYourFriends = $sql->fetchAll();
+
+            return $countOfYourFriends;
+        }
+
+        private function countOfOpenChats($username){
+            $sql = $this->pdo->prepare("SELECT COUNT(*) AS count_of_open_chats
+            FROM chats
+            WHERE user_id_start = $username OR user_id_second = $username");
+            $sql->execute();
+            $countOfOpenChats = $sql->fetchAll();
+
+            return $countOfOpenChats;
+        }
+
+        private function getAllRegisterdUsers(){
+            $sql = $this->pdo->prepare("SELECT COUNT(*) AS ingesamt_registrierte_users
+            FROM users");
+            $sql->execute();
+            $getAllRegisterdUsers = $sql->fetchAll();
+
+            return $getAllRegisterdUsers;
+        }
+
+        private function getAllSendedMessages(){
+            $sql = $this->pdo->prepare("SELECT COUNT(*) AS ingesamt_gesendete_nachrichten
+            FROM messages");
+            $sql->execute();
+            $getAllSendedMessages = $sql->fetchAll();
+
+            return $getAllSendedMessages;
+        }
+
+        private function getAllActiveUsers(){
+            $sql = $this->pdo->prepare("SELECT COUNT(*) AS ingesamt_gesendete_nachrichten
+            FROM messages");
+            $sql->execute();
+            $getAllSendedMessages = $sql->fetchAll();
+
+            return $getAllSendedMessages;
+        }
+
+        private function getAllOnlineUsers(){
+            $sql = $this->pdo->prepare("SELECT COUNT(*) AS aktuelle_aktive_Nutzer
+            FROM users
+            WHERE STATUS = 'online'");
+            $sql->execute();
+            $getAllOnlineUsers = $sql->fetchAll();
+
+            return $getAllOnlineUsers;
         }
     }

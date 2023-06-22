@@ -22,12 +22,12 @@ if($_POST['password'] === $_POST['password2']){
     }
     else{
         $error = true;
-        $errorText = "Passwords is too short.";
+        $errorText = "Das Passwort ist zu kurz.";
     }
 }
 else{
     $error = true;
-    $errorText = "Passwords are not identical.";
+    $errorText = "Die Passwörter sind nicht identisch.";
 }
 
 //send back to register page

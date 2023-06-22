@@ -15,7 +15,7 @@
         }
 
         private function getUserInfo($username){
-            $sql = $this->pdo->prepare("SELECT username, status, created_at FROM users WHERE id = ?");
+            $sql = $this->pdo->prepare("SELECT username, status, UNIX_TIMESTAMP(created_at) AS created_at FROM users WHERE id = ?");
             $sql->execute([$username]);
             $userInfo = $sql->fetch();
 
@@ -39,7 +39,7 @@
         }
 
         private function getAllUsers($username){
-            $sql = $this->pdo->prepare("SELECT id, username, created_at, status FROM users");
+            $sql = $this->pdo->prepare("SELECT id, username, UNIX_TIMESTAMP(created_at) AS created_at, status FROM users");
             $sql->execute();      
             $allUsersInfo = $sql->fetchAll();
 
@@ -47,10 +47,10 @@
         }
 
         private function getLastMessage($username){
-            $sql = $this->pdo->prepare("SELECT m1.chat_id AS chat_id, m1.message, m1.send_by_user_id, m1.send_at, m1.seen, m1.deleted
+            $sql = $this->pdo->prepare("SELECT m1.chat_id AS chat_id, m1.message, m1.send_by_user_id, UNIX_TIMESTAMP(m1.send_at) AS send_at, m1.seen, m1.deleted
             FROM messages m1 LEFT JOIN messages m2
              ON (m1.chat_id = m2.chat_id AND m1.id < m2.id), chats c
-            WHERE m1.chat_id = c.id AND m2.id IS NULL AND (c.user_id_start = 68 OR c.user_id_second = 68);");
+            WHERE m1.chat_id = c.id AND m2.id IS NULL AND (c.user_id_start = $username OR c.user_id_second = $username);");
             $sql->execute();
             $chatsInfo = $sql->fetchAll();
 

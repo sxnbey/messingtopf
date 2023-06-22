@@ -46,10 +46,11 @@ if(!isset($_SESSION['username'])){
 
         <!-- the buttons to switch between the left content. -->
         <div id="leftPageSwitch">
-          <button id="chatButton" title="Auf die Chats umschalten">📝</button>
-          <button id="flButton" title="Auf die Freundesliste umschalten">
+          <button id="chats" title="Auf die Chats umschalten">📝</button>
+          <button id="friendlist" title="Auf die Freundesliste umschalten">
             👥
           </button>
+          <button id="add" title="Freunde hinzufügen">➕</button>
         </div>
       </div>
 
@@ -133,7 +134,7 @@ if(!isset($_SESSION['username'])){
         <a href="https://github.com/Czubik" target="_blank">Czubik</a>
       </p>
       <form action="logout.php" method="post">
-        <input autocomplete="off" type="submit" value="Abmelden!">
+        <input autocomplete="off" type="submit" value="Abmelden">
       </form>
     </footer>
   </body>

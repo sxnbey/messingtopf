@@ -14,7 +14,7 @@ $currentCredentials = $checkuser->getCorrectUserId($username);
 
 if($currentCredentials === false) {
     $error = true;
-    $errorText = 'Incorrect username or Password';
+    $errorText = 'Falscher Nutzername oder Passwort';
 }
 else{
     $getCurrentUser = new \System\getCurrentUser;

@@ -1,55 +1,16 @@
 // just example chats, users and messages to work with. will be replaced later with the real data.
-const user = {};
+let user = {};
+let system = {
+  pages: [
+    { page: "chats", id: 1 },
+    { page: "friendlist", id: 2 },
+    { page: "add", id: 3 },
+  ],
+};
 
-$.ajax({
-  type: "POST",
-  url: "api.php",
-  success: function (result) {
-    const data = JSON.parse(result);
-    console.log(data);
-    // user.friends = data.friends;
-    // user.chats = data.allChats;
-    // user.status = data.currentUser.status;
-    // user.username = data.currentUser.username;
-  },
-});
+// declaration of the current page
 
-let exampleUser = {
-  username: "senbey",
-  online: true,
-  friendlist: [],
-  chats: [],
-  createdAt: 1686116861929,
-  id: 1,
-};
-const exampleMsg = {
-  content: "Was geht bei dir?",
-  author: user,
-  read: false,
-  deleted: false,
-  createdAt: 1670844864000,
-  id: 1,
-};
-let exampleChat = {
-  users: [],
-  messages: [exampleMsg],
-  lastMessage: exampleMsg,
-  id: 1,
-};
-const exampleUser2 = {
-  username: "xXGamerXx",
-  online: true,
-  unreadChats: [exampleChat],
-  friendlist: [user],
-  chats: [exampleChat],
-  createdAt: 1686116861931,
-  id: 2,
-};
-const system = { users: [user, exampleUser2] };
-user.friendlist = [exampleUser2];
-user.chats = [exampleChat];
-exampleChat.users = [user, exampleUser2];
-exampleChat.unreadChats = [exampleChat];
+system.curPage = system.pages[0];
 
 const stats = [
   { id: "sentMessagesCount", value: 2.742 },
@@ -64,22 +25,45 @@ const stats = [
 
 // after this line, the main script starts.
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
+  // getting all the data
+
+  await $.ajax({
+    type: "POST",
+    url: "api.php",
+    success: function (result) {
+      const data = JSON.parse(result);
+
+      user.username = data.currentUser.username;
+      user.status = data.currentUser.status;
+      user.createdAt = data.currentUser.created_at;
+      user.id = data.allUsersData.find(
+        (i) => i.username == data.currentUser.username
+      ).id;
+
+      system.users = data.allUsersData;
+      system.lastMessages = data.lastMessage;
+
+      createChatData(data.allChats);
+      createFriendlistData(data.friendsIds);
+    },
+  });
+
   // declaration of everything that need to be in this block.
 
   const statBoxes = document.querySelectorAll(".box");
 
-  // switches between the friendlist and the chat overview, based on a given parameter on page load => see ./index.html line 10-11.
+  // switches between the overviews, based on a given parameter on page load => see ./index.html line 10-11.
   // i have passed this function the parameter true, to tell the function that it has been called on page load, because i didnt
   // want to type most of the code 2 times. => see ./js/functions.js line 11.
 
-  flchatSwitch(true);
+  flchatSwitch();
 
   // adds an event listener to the chat and friendlist buttons so the page changes to the friendlist/chats with a button press.
 
-  ["chatButton", "flButton"].forEach((i) =>
-    getEl(i).addEventListener("click", function () {
-      flchatSwitch();
+  ["chats", "friendlist", "add"].forEach((i) =>
+    getEl(i).addEventListener("click", function (e) {
+      flchatSwitch(e.target);
     })
   );
 

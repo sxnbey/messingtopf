@@ -13,10 +13,6 @@ if(!isset($_SESSION['username'])){
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>messingtopf</title>
-    <script>
-      // the parameter to change between the chats and the friendlist. 1 = chats, 2 = friendlist
-      let curPage = 1;
-    </script>
     <script src="../js/library/jQuery.min.js"></script>
     <script src="../js/functions.js"></script>
     <script src="../js/main.js"></script>
@@ -104,7 +100,7 @@ if(!isset($_SESSION['username'])){
           </div>
           <div class="box">
             <p>
-              Aktuelle aktive Nutzer:<br /><br /><span id="onlineUserCount"
+              Aktuell aktive Nutzer:<br /><br /><span id="onlineUserCount"
                 >0</span
               >
             </p>
@@ -123,7 +119,7 @@ if(!isset($_SESSION['username'])){
       <div id="changelog" class="child">
         <h1>Änderungsprotokoll</h1>
 
-        <hr />
+        <div id="changelogContent"></div>
       </div>
     </div>
 

@@ -13,16 +13,7 @@ system.curPage = system.pages[0];
 
 // the statistics, still hardcoded tho, will change later.
 
-const stats = [
-  { id: "sentMessagesCount", value: 2.742 },
-  { id: "receivedMessagesCount", value: 2.742 },
-  { id: "friendCount", value: 2.742 },
-  { id: "openChatCount", value: 2.742 },
-  { id: "registeredUserCount", value: 2.742 },
-  { id: "allSentMessagesCount", value: 2.742 },
-  { id: "onlineUserCount", value: 2.742 },
-  { id: "pageViewCount", value: 2.742 },
-];
+const stats = [];
 
 // after this line, the main script starts.
 
@@ -35,6 +26,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     success: function (result) {
       const data = JSON.parse(result);
 
+      console.log(data);
+
       user.username = data.currentUser.username;
       user.status = data.currentUser.status;
       user.createdAt = data.currentUser.created_at;
@@ -44,6 +37,24 @@ document.addEventListener("DOMContentLoaded", async function () {
 
       system.users = data.allUsersData;
       system.lastMessages = data.lastMessage;
+      system.changelog = data.allChangelogs;
+
+      stats.push(
+        {
+          id: "sentMessagesCount",
+          value: data.currentUserSendMessages[0][0],
+        },
+        {
+          id: "receivedMessagesCount",
+          value: data.currentUserGetMessages[0][0],
+        },
+        { id: "friendCount", value: data.countOfYourFriends[0][0] },
+        { id: "openChatCount", value: data.countOfOpenChats[0][0] },
+        { id: "registeredUserCount", value: system.users.length },
+        { id: "allSentMessagesCount", value: data.getAllSendedMessages[0][0] },
+        { id: "onlineUserCount", value: data.getAllOnlineUsers[0][0] },
+        { id: "pageViewCount", value: "/" }
+      );
 
       createChatData(data.allChats);
       createFriendlistData(data.friendsIds);
@@ -54,7 +65,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   const statBoxes = document.querySelectorAll(".box");
 
-  // switches between the overviews, based on a given parameter on page load => see ./index.html line 10-11.
+  // switches between the overviews, based on a given parameter on page load.
   // i have passed this function the parameter true, to tell the function that it has been called on page load, because i didnt
   // want to type most of the code 2 times. => see ./js/functions.js line 11.
 
@@ -68,9 +79,16 @@ document.addEventListener("DOMContentLoaded", async function () {
     })
   );
 
-  // i use these array with objects from line 45 to put the value in the statistic boxes. => ./js/functions.js line 107
+  // i use these array with objects from line 42 to put the value in the statistic boxes. => ./js/functions.js line 107
 
   stats.forEach((i) => addStats(i));
+
+  // the content of the changelog.
+
+  getEl("changelogContent").innerHTML =
+    system.changelog.length == 0
+      ? "Es ist aktuell nichts im Änderungsprotokoll vorhanden.<br/><br/>Schau zu einem anderen Zeitpunkt noch einmal vorbei."
+      : system.changelog.join("<br/><br/>");
 
   // the hover animation for the boxes.
 
